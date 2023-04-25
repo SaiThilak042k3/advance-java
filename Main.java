@@ -1,40 +1,55 @@
-import java.lang.annotation.*;
-import java.lang.reflect.Method;
 
-import annotations.*;
-import java.lang.sort.*;
+import java.io.*;
+import java.util.*;  
 
-public class Main{
+public class Main {
+
+
+	public static boolean palindromCheck(String subS)
+	{
+		int size = subS.length();
+
+		for (int i = 0; i < size / 2; i++) {
+
+			if (subS.charAt(i)	
+				!= subS.charAt(size - i - 1)) {
+
+				return false;
+			}
+		}
+
+		// Palindromic behavior
+		return true;
+	}
+
 	
-	public String execute() throws Throwable {
-		Class<CustomController> controller = CustomController.class;
-		//Annotation[] annotations = controller.getDeclaredAnnotations();
-		//boolean restController = controller.isAnnotationPresent(RestController.Class);
-		Sort sort = controller.getAnnotation(Sort.class);
-		if (sort != null){
-			Method[] methods = controller.getMethods();
-			for(Method method : methods) {
-				//boolean requestMapping = method.isAnnotationPresent(ResquestMapping.Class)
-				RequestMapping requestMapping = method.getAnnotation(RequestMapping.class);
-				if (requestMapping.invoke()){
-					if(requestMapping != null) {
-						method.invoke(controller.newInstance());
+	public static void main(String[] args)
+	{
+		Scanner sc= new Scanner(System.in); 
+        System.out.print("Enter a string: ");  
+        String str= sc.nextLine();              
+        String largestStr = "";
+
+		for (int i = 0; i < str.length(); i++) {
+
+
+			for (int j = i; j < str.length(); j++) {
+
+				String subString = str.substring(i, j + 1);
+
+				// Checking whether the substring is
+				// palindrome
+				if (palindromCheck(subString)) {
+
+					if(largestStr.length() < subString.length()){
+						largestStr = subString;
 					}
 				}
 			}
-
-		}
-		
-		return null;
-	}
-
-	public static void main(String... args){
-		try{
-		new Main().execute();
-		} catch (Throwable e){
-
 		}
 
-		
+		System.out.println(
+			"Largest palindromic substrings in the given string are "
+			+ largestStr);
 	}
 }
